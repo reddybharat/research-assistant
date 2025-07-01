@@ -5,7 +5,7 @@ import shutil
 from core.helper.ingest_data import IngestData
 from research_assistant.utils.llm import LLM
 
-DATA_PATH = ".\src\core\data"
+DATA_PATH = ".\src\core\data\\user_files"
 
 st.set_page_config(page_title="Research Assistant", layout="centered")
 
@@ -34,14 +34,14 @@ if uploaded_files:
             f.write(uploaded_file.getbuffer())
         saved_file_paths.append(file_path)
     st.success(f"{len(uploaded_files)} file(s) uploaded.")
-    
+
 # Step 2: Ingest button
 if st.button("Continue (Ingest Data)", disabled=not uploaded_files):
     with st.spinner("Ingesting data into vector database..."):
         st.info("Starting ingestion process...")
         ingestor = IngestData()
         st.write(f"Ingesting files: {saved_file_paths}")
-        ingestor.ingest_data(saved_file_paths)
+        ingestor.ingest(saved_file_paths)
         st.success("Data ingested successfully! You can now ask questions.")
         st.write("Ingestion process complete.")
 
